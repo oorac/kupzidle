@@ -1,0 +1,6 @@
+translation:
+    locales:
+        whitelist: [\App\Helpers\LocalesHelper::DEFAULT]
+        default: \App\Helpers\LocalesHelper::DEFAULT
+    dirs:
+        - '%appDir%/Translations'

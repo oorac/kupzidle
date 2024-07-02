@@ -1,0 +1,123 @@
+includes:
+    - services.neon
+    - scheduler.neon
+    - local.neon
+    - translation.neon
+
+application:
+    errorPresenter: Front:Error
+    mapping:
+        *: [ App, Modules\*, Presenters\*Presenter ]
+
+session:
+    autoStart: true
+    expiration: 365 days
+    gcMaxlifetime: 1209600
+
+di:
+    export:
+        parameters: no
+        tags: no
+
+extensions:
+    console: Contributte\Console\DI\ConsoleExtension(%consoleMode%)
+    scheduler: Contributte\Scheduler\DI\SchedulerExtension
+    translation: App\Translator\DI\Extension
+
+    # DBAL
+    dbal: Nettrine\DBAL\DI\DbalExtension
+    dbal.console: Nettrine\DBAL\DI\DbalConsoleExtension
+
+    # Nettrine
+    nettrine.annotations: Nettrine\Annotations\DI\AnnotationsExtension
+    nettrine.cache: Nettrine\Cache\DI\CacheExtension
+
+    # ORM
+    orm: Nettrine\ORM\DI\OrmExtension
+    orm.cache: Nettrine\ORM\DI\OrmCacheExtension
+    orm.console: Nettrine\ORM\DI\OrmConsoleExtension
+    orm.annotations: Nettrine\ORM\DI\OrmAnnotationsExtension
+
+    # Mailing
+    mailing: Ublaboo\Mailing\DI\MailingExtension
+    bugsnag: App\Extensions\BugsnagExtension
+
+bugsnag:
+    apiKey: %logger.bugsnag.apiKey%
+
+mailing:
+	do: both # log|send|both
+	logDirectory: '%appDir%/../log/mails'
+	mailImagesBasePath: %wwwDir%
+	mails: [
+	    default_sender: %mail.username%
+	]
+
+console:
+    name: %settings.siteName%
+    version: '1.0'
+    catchExceptions: false
+    autoExit: true
+    url: %settings.siteUrl%
+    lazy: false
+
+dbal:
+    debug:
+        panel: %debugMode%
+    connection:
+        driver: %database.driver%
+        host: %database.host%
+        user: %database.user%
+        password: %database.password%
+        dbname: %database.dbname%
+        charset: utf8mb4
+        pool:
+            enabled: true
+            minimum: 1  # Minimální počet připojení v poolu
+            maximum: 10 # Maximální počet připojení v poolu
+        types:
+            enum:
+                class: App\Doctrine\DBAL\Types\EnumType
+                commented: false
+            lazy_json_array:
+                class: App\Doctrine\DBAL\Types\LazyJsonArrayType
+                commented: false
+            simple_array:
+                class: App\Doctrine\DBAL\Types\SimpleArrayType
+                commented: true
+        typesMapping:
+            enum: string
+
+
+orm:
+    entityManagerDecoratorClass: App\Services\Doctrine\EntityManager
+    configuration:
+        customNumericFunctions:
+            Rand: App\Doctrine\ORM\Query\Functions\Rand
+        customStringFunctions:
+            PURE_SQL: App\Doctrine\ORM\Query\Functions\PureSql
+
+
+orm.annotations:
+    mapping:
+        App\Models: %appDir%/Models
+
+
+orm.cache:
+    defaultDriver: Doctrine\Common\Cache\FilesystemCache(%tempDir%/cache/orm.cache/)
+
+
+scheduler:
+    path: '%tempDir%/scheduler'
+
+
+mail:
+    smtp: %mail.smtp%
+    host: %mail.host%
+    port: %mail.port%
+    username: %mail.username%
+    password: %mail.password%
+
+tracy:
+    bar:
+        - Nextras\MailPanel\MailPanel(%tempDir%/mail-panel-latte)

@@ -1,0 +1,19 @@
+action: Akce
+no_item_found: Nebyly nalezeny žádné záznamy
+items: Zobrazeno
+from: z
+per_page_submit: Zobrazit
+reset_filter: Smazat filtr
+no_item_found_reset: Nebyly nalezeny žádné záznamy
+here: Smazat filtr
+previous: Předchozí
+next: Další
+show_all_columns: Zobrazit všechny sloupce
+show_default_columns: Vrátit do výchozího zobrazení
+hide_column: Skrýt sloupec
+cancel: Zrušit
+save: Uložit
+edit: Editovat
+choose: Vybrat
+group_actions: Hromadné operace
+execute: Proveď

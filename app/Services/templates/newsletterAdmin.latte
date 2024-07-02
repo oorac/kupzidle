@@ -1,0 +1,25 @@
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Nový odběr novinek</title>
+        <link rel="stylesheet" href="/css/bootstrap.min.css">
+    </head>
+    <body class="bg-light">
+        <div class="container">
+            <div class="card p-6 p-lg-10 space-y-4">
+                <h1 class="h3 fw-700">
+                    Email z webu IDOP.cz
+                </h1>
+                <p>Právě se přihlásil nový uživatel k odběru novinek.</p>
+                <p>Přihlášený mail je {$email}</p>
+                <p>Voucher kód je {$code}</p>
+                <a class="btn btn-primary p-3 fw-700" href="https://idop.cz">Navštívit web</a>
+            </div>
+            <div class="text-muted text-center my-6">
+                {$namePage}<br>
+                {$streetPage}<br>
+                {$zipcodePage} {$cityPage}, {$statePage}<br>
+            </div>
+        </div>
+    </body>
+</html>

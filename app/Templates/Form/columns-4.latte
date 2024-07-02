@@ -1,0 +1,54 @@
+{block content}
+    <form n:name=$form>
+        <div class="alert alert-danger" n:ifcontent>
+            <span n:foreach="$form->getOwnErrors() as $error">{$error}</span>
+        </div>
+        <div class="row">
+            {foreach $form->getControls() as $input}
+                {continueIf in_array($input->getOption(type), ['hidden', 'button'])}
+                    {var $id = $input->getOption('id')}
+                    <div class="col-6">
+                        {if $input == Nette\Forms\Controls\UploadControl::class || $input == Nette\Application\UI\Multiplier::class}
+                            <div {if $id}id="{$id}"{/if} class="mb-3">
+                                {label $input, class => $input->getLabelPrototype()->getAttribute('class') . ' form-label' /}
+                            {input $input, class => $input->getControlPrototype()->getAttribute('class') . ' form-control'}
+                            {inputError $input}
+                            </div>
+                        {elseif $input == Nette\Forms\Controls\SelectBox::class}
+                            <div {if $id}id="{$id}"{/if} class="form-check form-radio-primary mb-3">
+                                {input $input, class => $input->getControlPrototype()->getAttribute('class') . ' form-check-input'}
+                            {label $input, class => $input->getLabelPrototype()->getAttribute('class') . ' form-check-label' /}
+                            {inputError $input}
+                            </div>
+                        {elseif $input == Nette\Forms\Controls\RadioList::class}
+                            <div {if $id}id="{$id}"{/if} class="form-check form-radio-primary mb-3">
+                                {label $input, class => $input->getLabelPrototype()->getAttribute('class') . ' form-label' /}
+                            {input $input, class => $input->getControlPrototype()->getAttribute('class') . ' form-check-input'}
+                            </div>
+                        {else}
+                            <div {if $id}id="{$id}"{/if} class="mb-3">
+                                {label $input, class => $input->getLabelPrototype()->getAttribute('class') . ' form-label' /}
+                            {input $input, class => $input->getControlPrototype()->getAttribute('class') . ' form-control'}
+                            {inputError $input}
+                            </div>
+                        {/if}
+                    </div>
+            {/foreach}
+        </div>
+        <div class="row">
+            {foreach $form->getControls() as $input}
+                {continueIf ! in_array($input->getOption(type), ['hidden', 'button'])}
+                {if $input->getOption(type) === 'hidden'}
+                    {label $input, class => $input->getLabelPrototype()->getAttribute('class') . ' form-label' /}
+                    {input $input, class => $input->getControlPrototype()->getAttribute('class') . ' form-control'}
+                {else}
+                    <div class="col-6">
+                        <div class="mb-3">
+                            {input $input, class => 'btn btn-primary waves-effect'}
+                        </div>
+                    </div>
+                {/if}
+            {/foreach}
+        </div>
+    </form>
+{/block}

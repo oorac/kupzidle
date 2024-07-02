@@ -1,0 +1,223 @@
+services:
+    authenticator: App\Security\Authenticator
+    nette.userStorage: App\Security\UserStorage
+    router: App\Router\RouterFactory::createRouter
+    security.user: App\Security\SecurityUser
+    permission: App\Security\PermissionFactory::create
+    nette.mailer:
+        class: Nette\Mail\SmtpMailer(
+            {
+                host: %mail.host%
+                username: %mail.username%
+                password: %mail.password%
+                secure: %mail.secure%
+            }
+        )
+
+    application.application:
+        setup:
+           - onStartup: [@ApplicationService::onStartup()]
+
+    DiscriminatorMapperSubscriber:
+        factory: App\Services\Doctrine\DiscriminatorMapperSubscriber
+        tags: [nettrine.subscriber]
+
+    console.application: App\Console\ConsoleApplication
+
+    # App services
+    MailerService: App\Services\MailerService
+    AdminNotifications: App\Services\AdminNotifications
+    ApplicationService: App\Services\ApplicationService
+    NotificationsService: App\Services\NotificationsService
+    UserNotifications: App\Services\UserNotifications
+    BuilderFactory: App\Doctrine\FormBuilder\BuilderFactory
+    DI: App\Services\DI
+    Deadpool: App\Services\Deadpool\Deadpool
+    DeadpoolProcessor: App\Services\Deadpool\Processor
+    UserPassword: App\Services\User\Password
+    DpdService: App\Services\DpdService
+    PackageService: App\Services\PackageService
+    XmlParser: App\Services\XmlParser
+    UpGatesService: App\Services\UpGates\UpGatesService
+    UpGatesClient: App\Services\UpGates\UpGatesClient
+    FeedService: App\Services\FeedService
+    ProductImportService: App\Services\Money\ProductImportService
+    ExportOrderService: App\Services\Money\ExportOrderService
+    ProductService: App\Services\ProductService
+
+    Mapper: App\Doctrine\ReverseFormMapper\Mapper
+
+    # providers
+    MessageSendersProvider: App\Providers\MessageSendersProvider
+    SettingsProvider: App\Providers\SettingsProvider(%settings%)
+    AMQService: App\Services\RabbitMQ\AMQService(%rabbitmq%)
+
+    # senders
+    MailMessageSender: App\Services\MessageSenders\MailMessageSender(%mail.name%, %mail.email%)
+
+    # commands
+    ProductXmlSplitterConsumerCommand: App\Console\ProductXmlSplitterConsumerCommand
+    ProductXmlProcessorConsumerCommand: App\Console\ProductXmlProcessorConsumerCommand
+    DownloadProductConsumerCommand: App\Console\DownloadProductConsumerCommand
+    DownloadCategoryConsumerCommand: App\Console\DownloadCategoryConsumerCommand
+    GenerateFeedConsumerCommand: App\Console\GenerateFeedConsumerCommand
+    DownloadOrderConsumerCommand: App\Console\DownloadOrderConsumerCommand
+    ExportOrderMoneyConsumercommand: App\Console\ExportOrderMoneyConsumerCommand
+    SaveProductConsumerCommand: App\Console\SaveProductConsumerCommand
+    SaveParameterConsumerCommand: App\Console\SaveParameterConsumerCommand
+    SaveLabelConsumerCommand: App\Console\SaveLabelConsumerCommand
+    SaveCategoryConsumerCommand: App\Console\SaveCategoryConsumerCommand
+    SaveOrderConsumerCommand: App\Console\SaveOrderConsumerCommand
+
+    # components
+    FormFactory: App\Forms\FormFactory
+    IBreadcrumbsFactory: App\Controls\Breadcrumbs\IBreadcrumbsFactory
+    INavigationFactory: App\Controls\Navigation\INavigationFactory
+    IAddressFormFactory: App\Controls\Address\Form\IAddressFormFactory
+    IAddressControlFactory: App\Controls\Address\Control\IAddressControlFactory
+    IAddressGridFactory: App\Controls\Address\Grid\IAddressGridFactory
+
+    # tasks
+    HelloWorldTask: App\Tasks\HelloWorldTask
+    SendMessageTask: App\Tasks\SendMessageTask
+
+     # Repositories
+    AddressRepository:
+        type: App\Models\Repositories\AddressRepository
+        factory: @Doctrine\ORM\EntityManagerInterface::getRepository('App\Models\Address')
+
+    CategoryRepository:
+        type: App\Models\Repositories\CategoryRepository
+        factory: @Doctrine\ORM\EntityManagerInterface::getRepository('App\Models\Category')
+
+    CustomerRepository:
+        type: App\Models\Repositories\CustomerRepository
+        factory: @Doctrine\ORM\EntityManagerInterface::getRepository('App\Models\Customer')
+
+    CurrencyRepository:
+        type: App\Models\Repositories\CurrencyRepository
+        factory: @Doctrine\ORM\EntityManagerInterface::getRepository('App\Models\Currency')
+
+    DeliveryMethodRepository:
+        type: App\Models\Repositories\DeliveryMethodRepository
+        factory: @Doctrine\ORM\EntityManagerInterface::getRepository('App\Models\DeliveryMethod')
+
+    DocumentRepository:
+        type: App\Models\Repositories\DocumentRepository
+        factory: @Doctrine\ORM\EntityManagerInterface::getRepository('App\Models\Document')
+
+    DocumentProductRepository:
+        type: App\Models\Repositories\DocumentProductRepository
+        factory: @Doctrine\ORM\EntityManagerInterface::getRepository('App\Models\DocumentProduct')
+
+    DocumentVoucherRepository:
+        type: App\Models\Repositories\DocumentVoucherRepository
+        factory: @Doctrine\ORM\EntityManagerInterface::getRepository('App\Models\DocumentVoucher')
+
+    FeedRepository:
+        type: App\Models\Repositories\FeedRepository
+        factory: @Doctrine\ORM\EntityManagerInterface::getRepository('App\Models\Feed')
+
+    FeedItemRepository:
+        type: App\Models\Repositories\FeedItemRepository
+        factory: @Doctrine\ORM\EntityManagerInterface::getRepository('App\Models\FeedItem')
+
+    FileRepository:
+        type: App\Models\Repositories\FileRepository
+        factory: @Doctrine\ORM\EntityManagerInterface::getRepository('App\Models\File')
+
+    ImageRepository:
+        type: App\Models\Repositories\ImageRepository
+        factory: @Doctrine\ORM\EntityManagerInterface::getRepository('App\Models\Image')
+
+    LabelRepository:
+        type: App\Models\Repositories\LabelRepository
+        factory: @Doctrine\ORM\EntityManagerInterface::getRepository('App\Models\Label')
+
+    MetaRepository:
+        type: App\Models\Repositories\MetaRepository
+        factory: @Doctrine\ORM\EntityManagerInterface::getRepository('App\Models\Meta')
+
+    MessageRepository:
+        type: App\Models\Repositories\MessageRepository
+        factory: @Doctrine\ORM\EntityManagerInterface::getRepository('App\Models\Message')
+
+    NotificationRepository:
+        type: App\Models\Repositories\NotificationRepository
+        factory: @Doctrine\ORM\EntityManagerInterface::getRepository('App\Models\Notification')
+
+    OrderRepository:
+        type: App\Models\Repositories\OrderRepository
+        factory: @Doctrine\ORM\EntityManagerInterface::getRepository('App\Models\Order')
+
+    OrderGroupRepository:
+        type: App\Models\Repositories\OrderGroupRepository
+        factory: @Doctrine\ORM\EntityManagerInterface::getRepository('App\Models\OrderGroup')
+
+    OrderProductRepository:
+        type: App\Models\Repositories\OrderProductRepository
+        factory: @Doctrine\ORM\EntityManagerInterface::getRepository('App\Models\OrderProduct')
+
+    PaymentMethodRepository:
+        type: App\Models\Repositories\PaymentMethodRepository
+        factory: @Doctrine\ORM\EntityManagerInterface::getRepository('App\Models\PaymentMethod')
+
+    PackageRepository:
+        type: App\Models\Repositories\PackageRepository
+        factory: @Doctrine\ORM\EntityManagerInterface::getRepository('App\Models\Package')
+
+    PredictRepository:
+        type: App\Models\Repositories\PredictRepository
+        factory: @Doctrine\ORM\EntityManagerInterface::getRepository('App\Models\Predict')
+
+    ProductRepository:
+        type: App\Models\Repositories\ProductRepository
+        factory: @Doctrine\ORM\EntityManagerInterface::getRepository('App\Models\Product')
+
+    ProductCategoryRepository:
+        type: App\Models\Repositories\ProductCategoryRepository
+        factory: @Doctrine\ORM\EntityManagerInterface::getRepository('App\Models\ProductCategory')
+
+    ProductMetaRepository:
+        type: App\Models\Repositories\ProductMetaRepository
+        factory: @Doctrine\ORM\EntityManagerInterface::getRepository('App\Models\ProductMeta')
+
+    ProductParameterRepository:
+        type: App\Models\Repositories\ProductParameterRepository
+        factory: @Doctrine\ORM\EntityManagerInterface::getRepository('App\Models\ProductParameter')
+
+    ProductStoreRepository:
+        type: App\Models\Repositories\ProductStoreRepository
+        factory: @Doctrine\ORM\EntityManagerInterface::getRepository('App\Models\ProductStore')
+
+    StoreRepository:
+        type: App\Models\Repositories\StoreRepository
+        factory: @Doctrine\ORM\EntityManagerInterface::getRepository('App\Models\Store')
+
+    ServiceRepository:
+        type: App\Models\Repositories\ServiceRepository
+        factory: @Doctrine\ORM\EntityManagerInterface::getRepository('App\Models\Service')
+
+    SettingsRepository:
+        type: App\Models\Repositories\SettingsRepository
+        factory: @Doctrine\ORM\EntityManagerInterface::getRepository('App\Models\Settings')
+
+    SupplierOrderProductRepository:
+        type: App\Models\Repositories\SupplierOrderProductRepository
+        factory: @Doctrine\ORM\EntityManagerInterface::getRepository('App\Models\SupplierOrderProduct')
+
+    SupplierOrderRepository:
+        type: App\Models\Repositories\SupplierOrderRepository
+        factory: @Doctrine\ORM\EntityManagerInterface::getRepository('App\Models\SupplierOrder')
+
+    TransactionRepository:
+        type: App\Models\Repositories\TransactionRepository
+        factory: @Doctrine\ORM\EntityManagerInterface::getRepository('App\Models\Transaction')
+
+    UserRepository:
+        type: App\Models\Repositories\UserRepository
+        factory: @Doctrine\ORM\EntityManagerInterface::getRepository('App\Models\User')
+
+    VoucherRepository:
+        type: App\Models\Repositories\VoucherRepository
+        factory: @Doctrine\ORM\EntityManagerInterface::getRepository('App\Models\Voucher')

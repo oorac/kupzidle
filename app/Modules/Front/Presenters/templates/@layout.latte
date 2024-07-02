@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="cs"
+      data-layout="semibox"
+      data-layout-style="default"
+      data-sidebar="dark"
+      data-topbar="dark"
+      data-sidebar-size="lg"
+      data-sidebar-image="img-2"
+      data-preloader="enable"
+      data-sidebar-visibility="show"
+      data-layout-mode="light"
+      data-layout-width="fluid"
+      data-layout-position="fixed">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{ifset $titlePage} | {$titlePage}{/ifset}</title>
+    <link rel="shortcut icon" href="{$basePath}/favicon.ico?v={= APP_VERSION}" type="image/x-icon">
+    <link rel="icon" href="{$basePath}/favicon.ico?v={= APP_VERSION}" type="image/x-icon">
+    <link rel="apple-touch-icon" href="{$basePath}/favicon.ico?v={= APP_VERSION}" type="image/x-icon">
+    <link rel="apple-touch-icon-precomposed" href="{$basePath}/favicon.ico?v={= APP_VERSION}" type="image/x-icon">
+    <meta name="author" content="IDOP + MIDOM s.r.o.">
+
+    {block styles}
+        <!-- Layout config Js -->
+        <script src="{$basePath}/assets/js/layout.js?v={= APP_VERSION}"></script>
+        <!-- Bootstrap Css -->
+        <link href="{$basePath}/assets/css/bootstrap.min.css?v={= APP_VERSION}" id="bootstrap-style" rel="stylesheet" type="text/css" />
+        <!-- Icons Css -->
+        <link href="{$basePath}/assets/css/icons.min.css?v={= APP_VERSION}" rel="stylesheet" type="text/css" />
+        <!-- App Css-->
+        <link href="{$basePath}/assets/css/app.min.css?v={= APP_VERSION}" id="app-style" rel="stylesheet" type="text/css" />
+        <!-- custom Css-->
+        <link href="{$basePath}/assets/css/custom.min.css?v={= APP_VERSION}" id="app-style" rel="stylesheet" type="text/css" />
+
+    {/block}
+</head>
+<body>
+<div class="auth-page-wrapper auth-bg-cover py-5 d-flex justify-content-center align-items-center min-vh-100">
+    <div class="bg-overlay"></div>
+    <!-- auth-page content -->
+    <div class="auth-page-content overflow-hidden pt-lg-5">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="card overflow-hidden">
+                        <div class="row g-0">
+                            {include content}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    {include '@footer.latte'}
+</div>
+</body>
+<script src="{$basePath}/assets/js/jquery-3.3.1.min.js?v={= APP_VERSION}"></script>
+<script src="{$basePath}/assets/js/netteForms.min.js?v={= APP_VERSION}"></script>
+<script src="{$basePath}/assets/js/nette.ajax.js?v={= APP_VERSION}"></script>
+
+<!-- JAVASCRIPT -->
+{*<script src="{$basePath}/assets/libs/bootstrap/js/bootstrap.bundle.min.js?v={= APP_VERSION}"></script>*}
+{*<script src="{$basePath}/assets/js/pages/password-addon.init.js?v={= APP_VERSION}"></script>*}
+</html>

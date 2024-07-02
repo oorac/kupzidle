@@ -1,0 +1,64 @@
+{block content}
+    {foreach $groups as $group}
+        <li class="menu-title">
+            <span>{$group->getTitle()}</span>
+        </li>
+        {foreach $group->getItems() as $key => $item}
+            <li class="nav-item">
+                {if $item->getItems()}
+                    {if empty($item->getPresenter())}
+                        <a class="nav-link menu-link" href="#">
+                    {else}
+                        <a class="nav-link menu-link {if ($item->isActive())}active{/if}" href="#{$item->getPresenter() . '_' . $key}"
+                            data-bs-toggle="collapse" role="button"
+                            aria-expanded="false" aria-controls="sidebarDashboards">
+                    {/if}
+                        {if $icon = $item->getIcon()}
+                            <i class="{$icon}"></i>
+                        {/if}
+
+                        <span>{$item->getTitle()}</span>
+                        {if $badge = $item->getBadge()}
+                            <span class="badge badge-pill {$badge->getStyle()}" data-key="t-hot">{$badge->getTitle()}</span>
+                        {/if}
+                    </a>
+                    <div class="collapse menu-dropdown {if ($item->isActive())}show{/if}" id="{($item->getPresenter() ?? '') . '_' . $key}">
+                        {foreach $item->getItems() as $subitem}
+                            <ul class="nav nav-sm flex-column">
+                                {if empty($subitem->getPresenter())}
+                                    <a href="#" class="nav-link">
+                                {elseif ($subitem->getParam())}
+                                    <a href="{plink ':' . $subitem->getModule() . ':' . $subitem->getPresenter() . ':' . $subitem->getAction(), 'id' => $subitem->getParam()}" class="nav-link {if ($subitem->isActive())}active{/if}">
+                                {else}
+                                    <a href="{plink ':' . $subitem->getModule() . ':' . $subitem->getPresenter() . ':' . $subitem->getAction()}" class="nav-link {if ($subitem->isActive())}active{/if}">
+                                {/if}
+                                {if $icon = $subitem->getIcon()}
+                                            <i class="{$icon}"></i>
+                                        {/if}
+
+                                        <span>{$subitem->getTitle()}</span>
+                                    </a>
+                                    {include '@subitem.latte', subitem => $subitem}
+                            </ul>
+                        {/foreach}
+                    </div>
+                {else}
+                    {if empty($item->getPresenter())}
+                        <a class="nav-link menu-link" href="#">
+                    {else}
+                        <a class="nav-link menu-link {if ($item->isActive())}active{/if}" href="{plink ':' . $item->getModule() . ':' . $item->getPresenter() . ':' . $item->getAction()}" aria-controls="sidebarDashboards">
+                    {/if}
+                        {if $icon = $item->getIcon()}
+                            <i class="{$icon}"></i>
+                        {/if}
+
+                        <span>{$item->getTitle()}</span>
+                        {if $badge = $item->getBadge()}
+                            <span class="badge badge-pill {$badge->getStyle()}" data-key="t-hot">{$badge->getTitle()}</span>
+                        {/if}
+                    </a>
+                {/if}
+            </li>
+        {/foreach}
+    {/foreach}
+{/block}

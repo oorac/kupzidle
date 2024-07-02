@@ -1,0 +1,7 @@
+services:
+    DailyExportJob: App\Jobs\DailyExportJob
+
+scheduler:
+    jobs:
+        - cron: '1 0 * * *'
+          callback: [@DailyExportJob, run]

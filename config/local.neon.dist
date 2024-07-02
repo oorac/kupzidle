@@ -1,0 +1,34 @@
+parameters:
+    settings:
+        siteName: IDOP
+        siteUrl: https://localhost:8100
+
+    database:
+        driver: pdo_mysql
+        host: mysql
+        dbname: idop
+        user: root
+        password: root
+
+    rabbitmq:
+        user: ''
+        password: ''
+        port: 5672
+        host: 'rabbitmq'
+        vhost: 'localhost'
+
+    mail:
+        smtp: true
+        name: IDOP
+        email:
+        host:
+        port: 587
+        username: ''
+        password: ''
+        secure: 'ssl'
+
+    reportsEmail:
+        host: localhost
+        port: '1025'
+        username: ''
+        password: ''

@@ -1,0 +1,43 @@
+-all-: Vše
+-choose-: Vyberte ze seznamu
+alerts:
+    success: Úspěch
+    danger: Chyba
+    warning: Varování
+    info: Info
+confirmationDeleteNotification: Opravdu chcete vymazat označené notifikace?
+No: Ne
+really: Jste si jisti?
+roles:
+    ADMIN: Administrátor
+    MANAGER: Manažer
+    CASHIER: Pokladní
+    USER: Nový uživatel
+SelectFromList: Vyberte ze seznamu
+sex:
+    male: Muž
+    female: Žena
+Yes: Ano
+predictType:
+    EMAIL: E-mail
+    SMS: SMS
+codCurrency:
+    CZK: Kč
+    EUR: Eur
+countryCode:
+    CZ: Česká republika
+    SK: Slovensko
+packageStatus:
+    CREATED: Vytvořeno
+    SEND: Odesláno
+    DELETED: Stornováno
+productStatus:
+    CREATED: Nový
+    SYNC: Synchronizovaný
+    DELETED: Smazaný
+typeFeed:
+    IMPORT: Import
+    EXPORT: Export
+subTypeFeed:
+    PRODUCT: Produktový
+    ORDER: Objednávkový

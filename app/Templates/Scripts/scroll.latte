@@ -1,0 +1,46 @@
+<script>
+    const LokiScroll = {
+        scrollTop: function (smooth) {
+            this.scroll(0, smooth);
+        },
+
+        scrollIntoViewportTop: function (node, gap = null) {
+            gap = parseInt(gap === null ? node.dataset.lokiScrollTopGap : gap);
+            this.scroll((node.getBoundingClientRect().top + document.documentElement.scrollTop) - (gap ? gap : 0), true);
+        },
+
+        scrollIntoViewportMiddle: function (node) {
+            this.scroll((node.getBoundingClientRect().top + document.documentElement.scrollTop) - (window.innerHeight / 2), true);
+        },
+
+        scroll: function (top, smooth) {
+            smooth = typeof smooth === 'undefined' ? true : smooth;
+
+            if (smooth) {
+                return window.scrollTo({
+                    top: top,
+                    behavior: 'smooth'
+                });
+            }
+
+            setTimeout(() => {
+                let prev = document.documentElement.style.scrollBehavior;
+                document.documentElement.style.scrollBehavior = 'auto';
+                window.scrollTo({
+                    top: top
+                });
+
+                if (prev) {
+                    document.documentElement.style.scrollBehavior = prev;
+                }
+            }, 1);
+        },
+    };
+
+    // if (window.location.hash) {
+    //     let node = document.getElementById(window.location.hash);
+    //     if (node) {
+    //         LokiScroll.scrollIntoViewportTop(node);
+    //     }
+    // }
+</script>

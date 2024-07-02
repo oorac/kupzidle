@@ -1,0 +1,28 @@
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Potvrzení e-mailu z webu IDOP.cz</title>
+        <link rel="stylesheet" href="/css/bootstrap.min.css">
+    </head>
+    <body class="bg-light">
+        <div class="container">
+            <div class="card p-6 p-lg-10 space-y-4">
+                <h1 class="h3 fw-700">
+                    Email z webu IDOP.cz
+                </h1>
+                <p>Dobrý den {$name},</p>
+                <p>Zasíláme Vám potvrzení přijetí Vašeho mailu</p>
+                <p>Email: {$email}</p>
+                <p>Zpráva: </p>
+                <p>{$message}</p>
+                <a class="btn btn-primary p-3 fw-700" href="https://idop.cz">Navštívit web</a>
+            </div>
+{*            <img class="ax-center mt-10 w-40" src="images/logo.png"  />*}
+            <div class="text-muted text-center my-6">
+                {$companyName}<br>
+                {$streetPage}<br>
+                {$zipcodePage} {$cityPage}, {$statePage}<br>
+            </div>
+        </div>
+    </body>
+</html>

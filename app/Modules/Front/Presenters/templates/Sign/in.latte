@@ -1,0 +1,76 @@
+{block content}
+    <div class="col-lg-6">
+        <div class="p-lg-5 p-4 auth-one-bg h-100">
+            <div class="bg-overlay"></div>
+            <div class="position-relative h-100 d-flex flex-column">
+                <div class="mt-auto">
+                    <div class="mb-3">
+                        <i class="ri-double-quotes-l display-4 text-success"></i>
+                    </div>
+
+                    <div id="qoutescarouselIndicators" class="carousel slide" data-bs-ride="carousel">
+                        <div class="carousel-indicators">
+                            <button type="button" data-bs-target="#qoutescarouselIndicators" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+                            <button type="button" data-bs-target="#qoutescarouselIndicators" data-bs-slide-to="1" aria-label="Slide 2"></button>
+                            <button type="button" data-bs-target="#qoutescarouselIndicators" data-bs-slide-to="2" aria-label="Slide 3"></button>
+                        </div>
+                        <div class="carousel-inner text-center text-white-50 pb-5">
+                            <div class="carousel-item active">
+                                <p class="fs-15 fst-italic">" {_forms.registerForm.slideshow.text1} "</p>
+                            </div>
+                            <div class="carousel-item">
+                                <p class="fs-15 fst-italic">" {_forms.registerForm.slideshow.text2} "</p>
+                            </div>
+                            <div class="carousel-item">
+                                <p class="fs-15 fst-italic">" {_forms.registerForm.slideshow.text3} "</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-6">
+        <div class="p-lg-5 p-4">
+            <div>
+                <h5 class="text-primary">{_forms.loginForm.title}</h5>
+                <div n:foreach="$flashes as $flash" n:class="alert, 'alert-' . $flash->type" role="alert">{$flash->message}</div>
+            </div>
+
+            <div class="mt-4">
+                {form signInForm, class => 'needs-validation'}
+                    <div class="mb-3" style="color: red;" n:if="$form->hasErrors()">
+                        <p n:foreach="$form->errors as $error">{$error}</p>
+                    </div>
+                    <div class="mb-3">
+                        {label email, class => 'form-label' /}
+                        <input type="email" class="form-control" id="useremail" n:name="email">
+                        <div class="invalid-feedback">
+                            {_validations.email}
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        {label password, class => 'form-label' /}
+                        <div class="position-relative auth-pass-inputgroup">
+                            <input type="password" n:name="password" class="form-control pe-5 password-input" onpaste="return false" id="password-input" aria-describedby="passwordInput">
+                            <button class="btn btn-link position-absolute end-0 top-0 text-decoration-none text-muted password-addon" type="button" id="password-addon"><i class="ri-eye-fill align-middle"></i></button>
+                            <div class="invalid-feedback">
+                                {_validations.password}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" n:name=remember id="auth-remember-check">
+                        <label class="form-check-label" for="auth-remember-check">{_forms.remember}</label>
+                    </div>
+                    <div class="mt-4">
+                        <input class="btn btn-info w-100" n:name=send type="submit">
+                    </div>
+                {/form}
+            </div>
+            <div class="mt-5 text-center">
+                <p class="mb-0">Nemáte účet ? <a n:href=":up" class="fw-semibold text-primary text-decoration-underline"> {_actions.Register}</a> </p>
+            </div>
+        </div>
+    </div>
+{/block}

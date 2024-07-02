@@ -1,0 +1,35 @@
+<script>
+	let globalFlashesHandlesNode = document.createElement('div');
+	globalFlashesHandlesNode.classList.add('loki-flashes-holder');
+	document.body.append(globalFlashesHandlesNode);
+
+	function addFlash(message, type, index = null) {
+		let flash = document.createElement('div');
+		flash.classList.add('alert' ,'loki-flash', 'alert-solid', 'alert-label-icon', 'fade', 'show');
+		flash.classList.add('alert-' + type, 'loki-flash--' + type);
+		flash.innerHTML = message;
+
+		globalFlashesHandlesNode.appendChild(flash);
+
+        if (index === null) {
+            index = Array.from(globalFlashesHandlesNode.children).indexOf(flash) + 1;
+        }
+
+        let timeout = 4000 + 25 * message.length + 1000 * (index ? index : 1);
+
+		setTimeout(function () {
+			if (flash) {
+				flash.classList.add('loki-flash--delete');
+
+				setTimeout(function () {
+					if (flash) {
+                        flash.remove();
+					}
+				}, 1000);
+			}
+		}, timeout);
+
+		return timeout;
+	}
+
+</script>

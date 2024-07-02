@@ -1,0 +1,230 @@
+{block styles}
+    {include parent}
+    <link href="{$basePath}/style/cropper.css?v={= APP_VERSION}" rel="stylesheet" type="text/css" />
+{/block}
+{block content}
+    <div class="container-fluid">
+        <div class="position-relative">
+            <div class="profile-wid-bg profile-setting-img">
+                <img src="{$basePath}/assets/images/profile-bg.jpg?v={= APP_VERSION}" class="profile-wid-img" alt="">
+                <div class="overlay-content">
+                    <div class="text-end p-3">
+                        <div class="p-0 ms-auto rounded-circle">
+                            <h1 style="color: white">{$title}</h1>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xxl-3">
+                <div class="card mt-n5">
+                    <div class="card-body p-4">
+                        <div class="text-center">
+                            <div class="profile-user position-relative d-inline-block mx-auto  mb-4">
+                                {if $identityUser->hasImage()}
+                                    <img src="{$identityUser->getImageUrl($deadpool, 400)}?v={= APP_VERSION}"
+                                         class="rounded-circle avatar-xl img-thumbnail user-profile-image"
+                                         loading="lazy" alt="{$identityUser->getFullName()}" id="avatar">
+                                {else}
+                                    <img src="{$basePath}/assets/images/users/avatar-1.jpg?v={= APP_VERSION}"
+                                         class="rounded-circle avatar-xl img-thumbnail user-profile-image"
+                                         alt="user-profile-image" id="avatar">
+                                {/if}
+                                <div class="avatar-xs p-0 rounded-circle profile-photo-edit">
+                                    {form editForm}
+                                        <input id="uploadUserImage" type="file"
+                                               class="profile-img-file-input" accept="image/*">
+                                        <label for="uploadUserImage"
+                                               class="profile-photo-edit avatar-xs">
+                                            <span class="avatar-title rounded-circle bg-light text-body">
+                                                <i class="ri-camera-fill"></i>
+                                            </span>
+                                        </label>
+                                    {/form}
+                                </div>
+                            </div>
+                            <h5 class="fs-16 mb-1">{$user->getIdentity()->getUser()->getFullName()}</h5>
+                            <p class="text-muted mb-0">{App\Models\User::TYPE_ROLES[$user->getIdentity()->getUser()->getRole()]}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xxl-9">
+                <div class="card mt-xxl-n5">
+                    <div class="card-header">
+                        <ul class="nav nav-tabs-custom rounded card-header-tabs border-bottom-0"
+                            role="tablist">
+                            <li class="nav-item">
+                                <a class="nav-link active" data-bs-toggle="tab" href="#personalDetails"
+                                   role="tab">
+                                    Základní informace
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" data-bs-toggle="tab" href="#changePassword" role="tab">
+                                    Změna hesla
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="card-body p-4">
+                        <div class="tab-content">
+                            <div class="tab-pane active" id="personalDetails" role="tabpanel">
+                                {form editForm}
+                                    <div class="row">
+                                        <div class="col-lg-6">
+                                            <div class="mb-3">
+                                                {label firstName, class => 'form-label' /}
+                                                {input firstName, class => 'form-control'}
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-6">
+                                            <div class="mb-3">
+                                                {label lastName, class => 'form-label' /}
+                                                {input lastName, class => 'form-control'}
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-6">
+                                            <div class="mb-3">
+                                                {label phone, class => 'form-label' /}
+                                                {input phone, class => 'form-control'}
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-6">
+                                            <div class="mb-3">
+                                                {label email, class => 'form-label' /}
+                                                {input email, class => 'form-control'}
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-12">
+                                            <div class="mb-3">
+                                                {label sex, class => 'form-check-label' /}
+                                                {foreach $form[sex]->getItems() as $key => $label}
+                                                    <div class="form-check form-radio-primary">
+                                                        <input n:name="sex:$key" class="form-check-input">
+                                                        <label n:name="sex:$key" class="form-check-label">{$label}</label>
+                                                    </div>
+                                                {/foreach}
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-12">
+                                            <div class="hstack gap-2 justify-content-end">
+                                                {input update, class => 'btn btn-primary'}
+                                            </div>
+                                        </div>
+                                    </div>
+                               {/form}
+                            </div>
+                            <div class="tab-pane" id="changePassword" role="tabpanel">
+                                {form updatePasswordForm}
+                                    <div class="row g-2">
+                                        <div class="col-lg-4">
+                                            <div>
+                                                {label password, class => 'form-label' /}
+                                                {input password, class => 'form-control'}
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-4">
+                                            <div>
+                                                {label passwordRepeat, class => 'form-label' /}
+                                                {input passwordRepeat, class => 'form-control'}
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-12">
+                                            <div class="mb-3">
+                                                <a href="javascript:void(0);"
+                                                   class="link-primary text-decoration-underline">Zapomněli jste heslo ?</a>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-12">
+                                            <div class="text-end">
+                                                {input submit, class => 'btn btn-primary'}
+                                            </div>
+                                        </div>
+                                    </div>
+                                {/form}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="uploadImageModalToggle" aria-hidden="true" aria-labelledby="uploadImageModalToggle" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                {form updateImageForm}
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="modalLabel"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Ořízněte obrázek</font></font></h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body text-center p-5">
+                        <div class="img-container" id="img-container">
+                            <img id="userImage" n:name="image" class="" src="">
+                        </div>
+                    </div>
+                    <div class="modal-footer" id="uploadImageModalButton">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" aria-label="Close">Zrušit</button>
+                        <input type="submit" n:name="submit" class="btn btn-primary" data-bs-dismiss="modal" id="crop" value="Oříznutí">
+                    </div>
+                {/form}
+            </div>
+        </div>
+    </div>
+
+{*    <div class="mx-auto container">*}
+{*        <div class="flex gap-6 mt-4 flex-wrap">*}
+{*            <div class="flex flex-row-reverse gap-2 items-center font-bold text-2xl">*}
+{*                <h1>{$title}</h1>*}
+{*                <div class="h-6 w-6 rounded-full flex items-center justify-center bg-black flex-shrink-0"><i class="ri-md ri-user-fill text-white"></i></div>*}
+{*            </div>*}
+{*        </div>*}
+
+{*        <div class="my-8">*}
+{*            <div class="font-bold text-xl">*}
+{*                <h2>Úprava údajů</h2>*}
+{*            </div>*}
+{*            {include DIR_APP . '/Templates/Form/columns-4.latte', form: editForm}*}
+{*        </div>*}
+
+{*        <div class="my-8">*}
+{*            <div class="font-bold text-xl">*}
+{*                <h2>Změna hesla</h2>*}
+{*            </div>*}
+{*            {include DIR_APP . '/Templates/Form/columns-4.latte', form: updatePasswordForm}*}
+{*        </div>*}
+
+{*        <div class="my-8">*}
+{*            <div class="font-bold text-xl">*}
+{*                <h2>Změna profilového obrázku</h2>*}
+{*            </div>*}
+{*            {form updateImageForm, class => 'mt-6 flex gap-6 items-center flex-wrap'}*}
+{*                {if $identityUser->hasImage()}*}
+{*                    <div>*}
+{*                        <img class="w-[200px] h-[200px] object-cover aspect-square rounded-full" src="{$identityUser->getImageUrl($deadpool, 400)}" loading="lazy" alt="{$identityUser->getFullName()}">*}
+{*                    </div>*}
+{*                {/if}*}
+{*                <div>*}
+{*                    <div>*}
+{*                        {label image, class => 'block mb-1' /}*}
+{*						{input image}*}
+{*                    </div>*}
+{*                    <div class="mt-4">*}
+{*                        {input submit, class => 'btn btn-primary'}*}
+
+{*						{if $identityUser->hasImage()}*}
+{*                            {input delete, class => 'btn btn-secondary'}*}
+{*                        {/if}*}
+{*                    </div>*}
+{*                </div>*}
+{*            {/form}*}
+{*        </div>*}
+{*    </div>*}
+{/block}
+{block scripts}
+    {include parent}
+    <script src="{$basePath}/js/cropper.js?v={= APP_VERSION}"></script>
+    <script src="{$basePath}/js/uploadUserImage.js?v={= APP_VERSION}"></script>
+{/block}

@@ -1,0 +1,20 @@
+successRegister: 'Registrace proběhla úspěšně. Vyčkejte na potvrzení.'
+welcomeInAdministration: Vítejte v admin sekci
+youLogged: Přihlášení proběhlo úspěšně
+successLogout: Odhlášení proběhlo úspěšně
+rowVisible: Záznam byl zveřejněn
+rowHidden: Záznam byl skryt
+UserWasBlocked: Uživatel byl zablokován
+UserWasUnBlocked: Uživatel byl odblokován
+ThisIsRequired: Toto pole je povinné
+RowWasEdited: Záznam byl upraven
+RowWasSaved: Záznam byl vytvořen
+RowWasDeleted: Záznam byl smazán
+RowWasRestored: Záznam byl obnoven
+Requested: Zažádáno
+Saved: Uloženo
+Approved: Záznam byl schválen
+SuccessExport: Export proběhl v pořádku
+ReallyDeleted: Opravdu chcete smazat tento záznam?
+ReallyRestore: Opravdu chcete obnovit tento záznam?
+DeleteDomesticCollection: Záznam byl úspěšně stornován

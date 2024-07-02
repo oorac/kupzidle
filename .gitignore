@@ -1,0 +1,10 @@
+/config/local.neon
+/.docker/data/
+/.docker/data_mysql/
+/www/userImages/
+/vendor/
+/log/
+/temp/
+/app/Bootstrap.php
+debugmode
+/.env

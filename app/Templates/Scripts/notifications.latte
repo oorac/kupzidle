@@ -1,0 +1,198 @@
+<script>
+    const LokiNotifications = {
+        _lastFetch: null,
+        _shown: false,
+        _limit: 20,
+        _interval: 7500,
+        _translations: {
+            en: {
+                LoadMore: 'Load more',
+                NoNotificationsToDisplay: 'No notifications to display',
+            },
+            cs: {
+                LoadMore: 'Načíst více',
+                NoNotificationsToDisplay: 'Žádné notifikace k zobrazení',
+            },
+        },
+
+        init: function () {
+            setInterval(this._loadCount.bind(this), this._interval);
+        },
+
+        toggle: function () {
+            this._shown
+                ? this.close()
+                : this.open();
+        },
+
+        open: function () {
+            setTimeout(() => {
+                document.addEventListener('click', this.handleDocumentClick);
+            });
+
+            this._getPreviewNodes().forEach(previewNode => {
+                previewNode.classList.add('active');
+            });
+
+            this._loadPreview();
+            this._shown = true;
+        },
+
+        close: function () {
+            document.removeEventListener('click', this.handleDocumentClick);
+
+            this._getPreviewNodes().forEach(previewNode => {
+                previewNode.classList.remove('active');
+                previewNode.innerHTML = '';
+            });
+
+            this._lastFetch = null;
+            this._shown = false;
+        },
+
+        handleDocumentClick: function (event) {
+            if (event.target.closest('.js-notifications__preview')) {
+                return;
+            }
+
+            LokiNotifications.close();
+        },
+
+        _showLoader: function () {
+            this._hideLoader();
+
+            this._getPreviewNodes().forEach(previewNode => {
+                let loaderNode = document.createElement('div');
+                loaderNode.classList.add('c-notifications__loader');
+                loaderNode.classList.add('js-notifications__loader');
+                loaderNode.innerHTML = '<?xml version="1.0" encoding="utf-8"?><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a9 9 0 11-6.219-8.56" /></svg>';
+
+                previewNode.appendChild(loaderNode);
+            });
+        },
+
+        _hideLoader: function () {
+            this._getLoaderNodes().forEach(loaderNode => {
+                loaderNode.remove();
+            });
+        },
+
+        _loadPreview: function () {
+            let self = this;
+            self._updateCount(0);
+            self._showLoader();
+
+            let request = new XMLHttpRequest();
+            request.addEventListener('load', function () {
+                if (this.status !== 200) {
+                    return;
+                }
+
+                self._hideLoader();
+                self._lastFetch = JSON.parse(this.responseText);
+                self._getPreviewNodes().forEach(previewNode => {
+                    if (self._lastFetch['count'] === 0) {
+                        let emptyInfoNode = document.createElement('div');
+                        previewNode.innerHTML += '<div class="empty-notification-elem">\
+							<div class="w-25 w-sm-50 pt-3 mx-auto">\
+								<img src="/assets/images/svg/bell.svg" class="img-fluid" alt="user-pic">\
+							</div>\
+							<div class="text-center pb-5 mt-2">\
+								<h6 class="fs-18 fw-semibold lh-base">' + self._translate('NoNotificationsToDisplay') +'</h6>\
+							</div>\
+						</div>';
+                        previewNode.appendChild(emptyInfoNode);
+
+                        return;
+                    }
+
+                    self._lastFetch['items'].forEach((item) => {
+                        let itemNode = document.createElement('div');
+                        itemNode.classList.add('text-reset', 'notification-item', 'd-block', 'dropdown-item', 'position-relative');
+                        if (! item['seenOn']) {
+                            itemNode.classList.add('unseen');
+                        }
+
+                        let itemTimeNode = document.createElement('time');
+                        itemTimeNode.classList.add('mb-0', 'fs-11', 'fw-medium', 'text-uppercase', 'text-muted');
+
+                        let itemTimeSpan = document.createElement('span');
+                        itemTimeSpan.innerHTML = '<i class="mdi mdi-clock-outline"></i>' + item['createdOn'];
+
+                        let itemContentNode = document.createElement('div');
+                        itemContentNode.classList.add('fs-13', 'text-muted');
+
+                        let itemContentParagraph = document.createElement('h6');
+                        itemContentParagraph.classList.add('mt-0', 'mb-2', 'lh-base');
+                        itemContentParagraph.innerHTML = item['content'];
+
+                        itemContentNode.appendChild(itemContentParagraph);
+                        itemTimeNode.appendChild(itemTimeSpan);
+                        itemNode.appendChild(itemContentNode);
+                        itemNode.appendChild(itemTimeNode);
+                        previewNode.appendChild(itemNode);
+                    });
+
+                    if (self._lastFetch['hasNext']) {
+                        let loadMoreNode = document.createElement('div');
+                        loadMoreNode.classList.add('c-notification__load-more');
+                        loadMoreNode.innerText = self._translate('LoadMore');
+                        loadMoreNode.addEventListener('click', function () {
+                            loadMoreNode.remove();
+                            self._loadPreview();
+                        });
+
+                        previewNode.appendChild(loadMoreNode);
+                    }
+                });
+            });
+
+            request.open('GET', window.location.origin + '/notifications/fetch?limit=' + self._limit + (self._lastFetch ? '&afterCursorID=' + self._lastFetch['lastCursorID'] : ''));
+            request.send();
+        },
+
+        _loadCount: function () {
+            let self = this;
+            if (self._shown) {
+                return;
+            }
+
+            let request = new XMLHttpRequest();
+            request.addEventListener('load', function () {
+                if (this.status !== 200) {
+                    return;
+                }
+
+                self._updateCount(parseInt(this.responseText));
+            });
+
+            request.open('GET', window.location.origin + '/notifications/count');
+            request.send();
+        },
+
+        _updateCount: function (count) {
+            this._getBadgeNodes().forEach(badgeNode => {
+                badgeNode.innerText = count;
+                badgeNode.classList[count ? 'add' : 'remove']('active');
+            });
+        },
+
+        _getLoaderNodes: function () {
+            return document.querySelectorAll('.js-notifications__loader');
+        },
+
+        _getBadgeNodes: function () {
+            return document.querySelectorAll('.js-notifications__badge');
+        },
+
+        _getPreviewNodes: function () {
+            return document.querySelectorAll('.js-notifications__preview');
+        },
+
+        _translate: function (value) {
+            return this._translations[document.documentElement.lang][value];
+        },
+    }
+
+    LokiNotifications.init();
+</script>

@@ -1,0 +1,64 @@
+{block content}
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col">
+                <div class="h-100">
+                    <div class="row">
+                        <div class="col-xl-12">
+                            <div class="d-flex align-items-lg-center flex-lg-row flex-column">
+                                <div class="flex-grow-1">
+                                    <h4 class="fs-16 mb-1"></h4>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row pt-4">
+                        <div class="col-xl-12">
+                            <div class="card card-datagrid">
+                                <div class="card-header align-items-center d-flex">
+                                    <h4 class="card-title mb-0 flex-grow-1">{$title}</h4>
+                                    <div class="text-muted">
+                                        Vypište názvy pokladen, ke kterým má uživatel, {$userEntity->getFullName()}, mít přístup.
+                                    </div>
+                                </div>
+                                <div class="card-body">
+
+                                    <div class="live-preview">
+                                        {include DIR_APP . '/Templates/Form/columns-4.latte', form: rulesForm}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{/block}
+{block scripts}
+    {include parent}
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="{$basePath}/assets/js/jquery.nice-select.min.js?v={= APP_VERSION}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            $('.selectbox').select2({
+                placeholder: 'Název pokladny'
+            });
+            loadUserArray();
+        });
+
+        function loadUserArray() {
+            let cashRegisters = $('#cashRegisters').val();
+
+            if (cashRegisters) {
+                let parsedData = JSON.parse(cashRegisters);
+
+                jQuery.each(parsedData, function(selectBoxId, values) {
+                    $('#' + selectBoxId).val(values).trigger('change');
+                });
+            }
+        }
+    </script>
+{/block}

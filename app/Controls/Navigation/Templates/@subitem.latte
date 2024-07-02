@@ -1,0 +1,22 @@
+{foreach $subitem->getItems() as $sub}
+    {if empty($sub->getPresenter())}
+        <a href="#" class="nav-link">
+    {elseif ($sub->getParam())}
+        <a href="{plink ':' . $sub->getModule() . ':' . $sub->getPresenter() . ':' . $sub->getAction(), 'id' => $sub->getParam()}" class="nav-link {if ($sub->isActive())}active{/if}">
+    {else}
+        <a href="{plink ':' . $sub->getModule() . ':' . $sub->getPresenter() . ':' . $sub->getAction()}" class="nav-link {if ($sub->isActive())}active{/if}">
+    {/if}
+        {if $icon = $sub->getIcon()}
+            <i class="{$icon}"></i>
+        {/if}
+
+        <span>{$sub->getTitle()}</span>
+    </a>
+    {foreach $sub->getItems() as $key => $s}
+        <div class="collapse menu-dropdown {if ($s->isActive())}show{/if}" id="{$s->getPresenter() . '_' . $key}">
+            <ul class="nav nav-sm flex-column">
+                {include '@subitem.latte', subitem => $s}
+            </ul>
+        </div>
+    {/foreach}
+{/foreach}

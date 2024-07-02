@@ -1,0 +1,21 @@
+{block content}
+    <div class="row">
+        <div class="col-xxl-12">
+            <div class="card">
+                <div class="card-header align-items-center d-flex">
+                    <h4 class="card-title mb-0 flex-grow-1">{$title}</h4>
+                    <div class="text-end">
+                        <a n:href=":add" class="btn btn-soft-success waves-effect waves-light"><i class="ri-add-circle-line align-middle me-1"></i> {_actions.AddRow}</a>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="text-muted">
+                    </div>
+                    <div class="live-preview">
+                        {control listGrid}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{/block}

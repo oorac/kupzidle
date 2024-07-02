@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="cs"
+      data-layout="semibox"
+      data-layout-style="default"
+      data-sidebar="dark"
+      data-topbar="dark"
+      data-sidebar-size="lg"
+      data-sidebar-image="img-2"
+      data-sidebar-visibility="show"
+      data-layout-mode="light"
+      data-layout-width="fluid"
+      data-preloader="yes"
+      data-layout-position="fixed">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{ifset $titlePage} | {$titlePage}{/ifset}</title>
+    <link rel="shortcut icon" href="{$basePath}/favicon.ico?v={= APP_VERSION}" type="image/x-icon">
+    <link rel="icon" href="{$basePath}/favicon.ico?v={= APP_VERSION}" type="image/x-icon">
+    <link rel="apple-touch-icon" href="{$basePath}/favicon.ico?v={= APP_VERSION}" type="image/x-icon">
+    <link rel="apple-touch-icon-precomposed" href="{$basePath}/favicon.ico?v={= APP_VERSION}" type="image/x-icon">
+    <meta name="author" content="IDOP + MIDOM s.r.o.">
+
+    {block styles}
+        {include DIR_APP . '/Templates/Datagrid/styles.latte'}
+        <script src="{$basePath}/assets/js/layout.js?v={= APP_VERSION}"></script>
+        <link href="{$basePath}/assets/css/bootstrap.min.css?v={= APP_VERSION}" id="bootstrap-style" rel="stylesheet" type="text/css" />
+        <link href="{$basePath}/assets/css/icons.min.css?v={= APP_VERSION}" rel="stylesheet" type="text/css" />
+        <link href="{$basePath}/assets/css/custom.min.css?v={= APP_VERSION}" id="app-style" rel="stylesheet" type="text/css" />
+        <link href="{$basePath}/assets/css/main.css?v={= APP_VERSION}" id="app-style" rel="stylesheet" type="text/css" />
+        <link href="{$basePath}/assets/css/app.min.css?v={= APP_VERSION}" id="app-style" rel="stylesheet" type="text/css" />
+        <link href="{$basePath}/style/stylesheet.css?v={= APP_VERSION}" rel="stylesheet" type="text/css" >
+        <style>
+            #preloader{
+                background-color: #fafafab8;
+            }
+        </style>
+    {/block}
+</head>
+
+<body>
+<div id="layout-wrapper">
+    {include '@topbar.latte'}
+    {include '@sidebar.latte'}
+    <div class="main-content">
+        <div class="page-content">
+            <div class="container container-fluid" style="max-width: unset">
+                <div class="row">
+                    <div class="col-12">
+                        <div class="d-sm-flex align-items-center justify-content-between">
+                            <div class="page-title-right">
+                                {control breadcrumbs}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {include content}
+            </div>
+        </div>
+        {include '@footer.latte'}
+    </div>
+</div>
+
+<!--start back-to-top-->
+<button onclick="topFunction()" class="btn btn-danger btn-icon" id="back-to-top">
+    <i class="ri-arrow-up-line"></i>
+</button>
+<!--end back-to-top-->
+
+<!--preloader-->
+<div id="preloader">
+    <div id="status">
+        <div class="spinner-border text-primary avatar-sm" role="status">
+            <span class="visually-hidden">Načítám...</span>
+        </div>
+    </div>
+</div>
+
+{block scripts}
+    <script src="{$basePath}/assets/js/jquery.min.js?v={= APP_VERSION}"></script>
+    <script src="{$basePath}/assets/js/netteForms.min.js?v={= APP_VERSION}"></script>
+    <script src="{$basePath}/assets/js/nette.ajax.js?v={= APP_VERSION}"></script>
+    <script src="{$basePath}/assets/js/bootstrap/js/bootstrap.bundle.min.js?v={= APP_VERSION}"></script>
+    <script src="{$basePath}/assets/js/lord-icon-2.1.0.js?v={= APP_VERSION}"></script>
+    <script src="{$basePath}/assets/js/feather-icons/feather.min.js?v={= APP_VERSION}"></script>
+    <script src="{$basePath}/assets/js/app.js?v={= APP_VERSION}"></script>
+    <script src="{$basePath}/js/bundle.js?v={= APP_VERSION}"></script>
+    <script>
+        $('.nav-link').click(function() {
+            $(this).find('i').toggleClass('ri-arrow-down-line ri-arrow-up-line')
+        });
+    </script>
+    {include DIR_APP . '/Templates/Datagrid/scripts.latte'}
+    {include DIR_APP . '/Templates/Scripts/flashes.latte'}
+    {include DIR_APP . '/Templates/Scripts/notifications.latte'}
+
+    {snippet flashes}
+        {foreach $flashes as $index => $flash}
+            <script>
+                addFlash({$flash->message}, {$flash->type}, {$index + 1});
+            </script>
+        {/foreach}
+    {/snippet}
+{/block}
+
+</body>
+
+</html>

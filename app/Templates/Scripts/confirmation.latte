@@ -1,0 +1,105 @@
+<script>
+    const LokiConfirm = {
+        active: null,
+
+        confirm: function (content, callback) {
+            let self = this;
+
+            let buttonYes = document.createElement('button');
+            buttonYes.classList.add('loki-confirm__button-yes');
+            buttonYes.innerText = 'Ano';
+            buttonYes.onclick = function () {
+                self.discard();
+                callback();
+            };
+
+            let buttonNo = document.createElement('button');
+            buttonNo.classList.add('loki-confirm__button-no');
+            buttonNo.innerText = 'Ne';
+            buttonNo.onclick = function () {
+                self.discard();
+            };
+
+            let buttons = document.createElement('div');
+            buttons.classList.add('loki-confirm__buttons');
+            buttons.appendChild(buttonYes);
+            buttons.appendChild(buttonNo);
+
+            let inner = document.createElement('div');
+            inner.classList.add('loki-confirm__inner');
+            inner.innerHTML = content;
+            inner.appendChild(buttons);
+
+            let confirm = document.createElement('div');
+            confirm.classList.add('loki-confirm');
+            confirm.appendChild(inner);
+
+            document.body.appendChild(confirm);
+
+            self.active = confirm;
+        },
+
+        confirmButton: function (content, node, event, callback) {
+            let self = this;
+
+            if (node.dataset.submitConfirmed) {
+                return true;
+            }
+
+            if (event) {
+                event.preventDefault();
+                event.stopImmediatePropagation();
+            }
+
+            self.confirm(content, function () {
+                node.dataset.submitConfirmed = '1';
+
+                if (callback) {
+                    callback();
+                }
+
+                node.click();
+            });
+
+            return false;
+        },
+
+        discard: function () {
+            let self = this;
+
+            if (! self.active) {
+                return;
+            }
+
+            self.active.parentNode.removeChild(self.active);
+        }
+    };
+
+    document.querySelectorAll('[data-confirm]').forEach(node => {
+        node.addEventListener('click', event => {
+            if (! node.dataset.submitConfirmed) {
+                event.preventDefault();
+                LokiConfirm.confirm(node.dataset.confirm, function () {
+                    node.dataset.submitConfirmed = '1';
+
+                    if (node.hasAttribute('href')) {
+                        let url = new URL(node.href);
+                        url.searchParams.append('confirmed', decodeURIComponent('1'));
+                        node.href = url.toString();
+                    }
+
+                    let form = node.closest('form');
+                    if (form) {
+                        let url = new URL(form.action);
+                        url.searchParams.append('confirmed', decodeURIComponent('1'));
+                        form.action = url.toString();
+                    }
+
+                    node.click();
+                });
+
+                return false;
+            }
+        });
+    });
+</script>

@@ -1,0 +1,14 @@
+AnErrorOccurredDuringPurchase: Během zpracování došlo k chybě
+registerForm:
+    password: 'Heslo musí obsahovat alespoň jedno velké písmeno, jedno malé písmeno, jedno číslo a minimálně 8 znaků.'
+usernameOrPasswordIsBad: 'Uživatelské jméno nebo heslo není správné.'
+accountAlreadyExist: Uživatel s tímto e-mailem již existuje.
+yourAccountIsBlocked: Váš účet byl zablokován
+forbidden: Do této části aplikace nemáte přístup.
+UserDoesntExists: Uživatel neexistuje
+InsertNumber: Vložte číslo
+InsertDate: Vložte datum
+YouMustSomeWrite: Musíte něco vyplnit!
+RowDoesntExist: Záznam neexistuje
+RowAlreadyExist: Tento záznam již existuje
+badDatatype: Špatný datový typ

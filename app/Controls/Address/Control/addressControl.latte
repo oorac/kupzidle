@@ -1,0 +1,47 @@
+{snippet form}
+	{form form}
+		<script>
+			{foreach $form->getOwnErrors() as $index => $error}
+				addFlash({$error}, 'danger', {$index + 1});
+			{/foreach}
+		</script>
+		<div class="row">
+			<div class="col-lg-12">
+				<div class="row mb-3">
+					<div class="col-lg-12">
+						{label title, class => 'form-label' /}
+						{input title, class => 'form-control'}
+						<span class=error n:ifcontent>{inputError title}</span>
+					</div>
+				</div>
+				<div class="row mb-3">
+					<div class="col-lg-8">
+						{label street, class => 'form-label' /}
+						{input street, class => 'form-control'}
+						<span class=error n:ifcontent>{inputError street}</span>
+					</div>
+				</div>
+				<div class="row mb-3">
+					<div class="col-lg-8">
+						{label city, class => 'form-label' /}
+						{input city, class => 'form-control'}
+						<span class=error n:ifcontent>{inputError city}</span>
+					</div>
+					<div class="col-lg-4">
+						{label zipCode, class => 'form-label' /}
+						{input zipCode, class => 'form-control'}
+						<span class=error n:ifcontent>{inputError zipCode}</span>
+					</div>
+				</div>
+				<div class="row mb-3">
+					<div class="col-lg-8">
+						{label phone, class => 'form-label' /}
+						{input phone, class => 'form-control'}
+						<span class=error n:ifcontent>{inputError phone}</span>
+					</div>
+				</div>
+				{input submit, class => 'btn btn-outline-success'}
+			</div>
+		</div>
+	{/form}
+{/snippet}

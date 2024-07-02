@@ -1,0 +1,203 @@
+{block styles}
+    {include parent}
+{/block}
+{block content}
+
+    <div class="row pt-4">
+        <div class="col-xxl-12">
+            <div class="card card-datagrid">
+                <div class="card-header align-items-center d-flex">
+                    <h4 class="card-title mb-0 flex-grow-1">{$title}</h4>
+                </div>
+                <div class="card-body">
+                    <div class="text-muted">
+
+                    </div>
+                    <div class="live-preview">
+                        {snippet form}
+                            {form form}
+                                <script>
+                                    {foreach $form->getOwnErrors() as $index => $error}
+                                    addFlash({$error}, 'danger', {$index + 1});
+                                    {/foreach}
+                                </script>
+                                <div class="row pt-4">
+                                    <h4>Adresa svozu</h4>
+                                </div>
+                                <div class="row pt-4">
+                                    <div class="col-lg-6">
+                                        {label sender, class => 'form-label' /}
+                                        {input sender, class => 'form-control'}
+                                        <span class=error n:ifcontent>{inputError sender}</span>
+                                    </div>
+                                    <div class="col-lg-2">
+                                        {label countryCode, class => 'form-label' /}
+                                        {input countryCode, class => 'form-control'}
+                                        <span class=error n:ifcontent>{inputError countryCode}</span>
+                                    </div>
+                                </div>
+                                <div class="row pt-4">
+                                    <h4>Konečný příjemce</h4>
+                                </div>
+                                <div class="row pt-4">
+                                    <div class="col-lg-4">
+                                        {label contactName, class => 'form-label' /}
+                                        {input contactName, class => 'form-control'}
+                                        <span class=error n:ifcontent>{inputError contactName}</span>
+                                    </div>
+                                    <div class="col-lg-4">
+                                        {label name, class => 'form-label' /}
+                                        {input name, class => 'form-control'}
+                                        <span class=error n:ifcontent>{inputError name}</span>
+                                    </div>
+                                    <div class="col-lg-4">
+                                        {label companyName, class => 'form-label' /}
+                                        {input companyName, class => 'form-control'}
+                                        <span class=error n:ifcontent>{inputError companyName}</span>
+                                    </div>
+                                </div>
+                                <div class="row pt-4">
+                                    <div class="col-lg-2">
+                                        {label contactEmail, class => 'form-label' /}
+                                        {input contactEmail, class => 'form-control'}
+                                        <span class=error n:ifcontent>{inputError contactEmail}</span>
+                                    </div>
+                                    <div class="col-lg-2">
+                                        {label contactMobile, class => 'form-label' /}
+                                        {input contactMobile, class => 'form-control'}
+                                        <span class=error n:ifcontent>{inputError contactMobile}</span>
+                                    </div>
+                                    <div class="col-lg-3">
+                                        {label city, class => 'form-label' /}
+                                        {input city, class => 'form-control'}
+                                        <span class=error n:ifcontent>{inputError city}</span>
+                                    </div>
+                                    <div class="col-lg-2">
+                                        {label street, class => 'form-label' /}
+                                        {input street, class => 'form-control'}
+                                        <span class=error n:ifcontent>{inputError street}</span>
+                                    </div>
+                                    <div class="col-lg-2">
+                                        {label zipCode, class => 'form-label' /}
+                                        {input zipCode, class => 'form-control'}
+                                        <span class=error n:ifcontent>{inputError zipCode}</span>
+                                    </div>
+                                </div>
+
+                                <div class="row pt-4">
+                                    <h4>Dobírka</h4>
+                                </div>
+                                <div class="row pt-4">
+                                    <div class="col-lg-2">
+                                        {label codAmount, class => 'form-label' /}
+                                        {input codAmount, class => 'form-control'}
+                                        <span class=error n:ifcontent>{inputError codAmount}</span>
+                                    </div>
+                                    <div class="col-lg-2">
+                                        {label codCurrency, class => 'form-label' /}
+                                        {input codCurrency, class => 'form-control'}
+                                        <span class=error n:ifcontent>{inputError codCurrency}</span>
+                                    </div>
+                                    <div class="col-lg-2">
+                                        {label parcelWeight, class => 'form-label' /}
+                                        {input parcelWeight, class => 'form-control'}
+                                        <span class=error n:ifcontent>{inputError parcelWeight}</span>
+                                    </div>
+                                    <div class="col-lg-2">
+                                        {label countParcel, class => 'form-label' /}
+                                        {input countParcel, class => 'form-control'}
+                                        <span class=error n:ifcontent>{inputError countParcel}</span>
+                                    </div>
+                                    <div class="col-lg-2">
+                                        {label mainServiceElementCodes, class => 'form-label' /}
+                                        {input mainServiceElementCodes, class => 'form-control'}
+                                        <span class=error n:ifcontent>{inputError mainServiceElementCodes}</span>
+                                    </div>
+                                </div>
+                                <div class="row pt-4">
+                                    <div class="col-lg-4">
+                                        {label ref1, class => 'form-label' /}
+                                        {input ref1, class => 'form-control'}
+                                        <span class=error n:ifcontent>{inputError ref1}</span>
+                                    </div>
+                                    <div class="col-lg-4">
+                                        {label ref2, class => 'form-label' /}
+                                        {input ref2, class => 'form-control'}
+                                        <span class=error n:ifcontent>{inputError ref2}</span>
+                                    </div>
+                                    <div class="col-lg-4">
+                                        {label pickupDate, class => 'form-label' /}
+                                        {input pickupDate, class => 'form-control'}
+                                        <span class=error n:ifcontent>{inputError pickupDate}</span>
+                                    </div>
+                                </div>
+                                <div class="row pt-4">
+                                    <div class="col-lg-12 text-end">
+                                            {input submit, class => 'btn btn-success'}
+                                    </div>
+                                </div>
+                            {/form}
+                        {/snippet}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row pt-4">
+        <div class="col-xxl-12">
+            <div class="card card-datagrid">
+                <div class="card-header align-items-center d-flex">
+                    <h4 class="card-title mb-0 flex-grow-1">Seznam doplňkových služeb</h4>
+                </div>
+                <div class="card-body">
+                    <div class="text-muted">
+
+                    </div>
+                    <div class="live-preview table-responsive">
+                        {control predict}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{/block content}
+{block scripts}
+    {include parent}
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script>
+        // najdeme vsechny hlavní selectboxy co maji podrizeny selectbox
+        document.querySelectorAll('select[data-dependent]').forEach(function (main) {
+            // a když uživatel změní vybranou položku…
+            main.addEventListener('change', function () {
+                let dependent = main.form[main.dataset.dependent]; // podrizeny <select>
+                let url = main.dataset.url; // URL pro našeptávání
+                // ...udelame pozadavek na Endpoint presenter a posleme 'id'
+                fetch(url.replace(encodeURIComponent('#'), encodeURIComponent(main.value)))
+                    .then(response => response.json())
+                    // a nahrajeme do podrizeneho nove data
+                    .then(data => updateSelectbox(dependent, data));
+            });
+        });
+
+        // vloží nové <options> do <select>
+        function updateSelectbox(select, items)
+        {
+            select.innerHTML = ''; // odstranime vse
+
+            var el2 = document.createElement('option');
+            el2.setAttribute('selected', '');
+            el2.setAttribute('disabled', '');
+            el2.innerText = 'Vyberte ze seznamu';
+            select.appendChild(el2);
+
+            for (var id in items) { // vložime nové
+                var el = document.createElement('option');
+                el.setAttribute('value', id);
+                el.innerText = items[id];
+                select.appendChild(el);
+            }
+        }
+    </script>
+{/block}

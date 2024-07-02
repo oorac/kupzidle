@@ -1,0 +1,27 @@
+{block content}
+    <form n:name=$form>
+        <ul class="errors" n:ifcontent>
+            <li n:foreach="$form->getOwnErrors() as $error">{$error}</li>
+        </ul>
+
+        <div class="mt-6 grid gap-4 gap-y-6 xxl:gap-6">
+            {foreach $form->getControls() as $input}
+                {continueIf in_array($input->getOption(type), ['hidden', 'button'])}
+                {var $id = $input->getOption('id')}
+
+                <div {if $id}id="{$id}"{/if} class="relative">
+                    {label $input, class => $input->getLabelPrototype()->getAttribute('class') . ' text-gray-400 font-sm ml-4 mb-1 block' /}
+                    {input $input, class => $input->getControlPrototype()->getAttribute('class') . ' py-2 px-4 rounded-full border-gray-400 placeholder:text-gray-300 focus:ring-primary focus:border-primary w-full'}
+                    {inputError $input}
+                </div>
+            {/foreach}
+        </div>
+
+        <div class="mt-6">
+            {foreach $form->getControls() as $input}
+                {continueIf ! in_array($input->getOption(type), ['hidden', 'button'])}
+                {input $input, class => 'btn btn-primary'}
+            {/foreach}
+        </div>
+    </form>
+{/block}

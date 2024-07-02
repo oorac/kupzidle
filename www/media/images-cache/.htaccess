@@ -1,0 +1,7 @@
+<IfModule mod_expires.c>
+	ExpiresActive On
+	ExpiresDefault "access plus 10 years"
+</IfModule>
+<IfModule mod_headers.c>
+	Header set Cache-Control "max-age=31536050, public"
+</IfModule>
